@@ -1,0 +1,32 @@
+menu "RDP相关" {
+  item "获取RDP端口" {
+    local('$bid');
+    foreach $bid ($1){
+      blog($1, "Check Rdp Open Port");
+      bpowershell_import($bid, script_resource("/scripts/RDP/RegRdpPort.ps1"));
+      bpowerpick($bid,"RegRdpPort");
+      bshell($bid,"wevtutil cl \"Windows PowerShell\"");
+    }
+  }
+  item "查看RDP是否开启" {
+    blog($1, "请手动执行：shell netstat -ano | findstr \$RDP端口")
+  }
+
+  item "开启RDP服务" {
+    $bid = $1['@'];
+    bshell($bid, "REG ADD HKLM\\SYSTEM\\CurrentControlSet\\Control\\Terminal\" \"Server /v fDenyTSConnections /t REG_DWORD /d 0 /f");
+    bshell($bid, "wmic RDTOGGLE WHERE ServerName='%COMPUTERNAME%' call SetAllowTSConnections 1");
+  }
+
+  item "关闭RDP服务" {
+    $bid = $1['@'];
+    bshell($bid, "REG ADD HKLM\\SYSTEM\\CurrentControlSet\\Control\\Terminal\" \"Server /v fDenyTSConnections /t REG_DWORD /d 1 /f");
+    bshell($bid, "wmic RDTOGGLE WHERE ServerName='%COMPUTERNAME%' call SetAllowTSConnections 0");
+  }
+
+  item "防火墙放行RDP规则" {
+    $bid = $1['@'];
+    bshell($bid, "netsh advfirewall firewall add rule name=\"Remote Desktop\" protocol=TCP dir=in localport=3389 action=allow");
+	}
+
+}

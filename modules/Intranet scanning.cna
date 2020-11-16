@@ -1,0 +1,19 @@
+menu "内网扫描" {
+  item "SharpWebScan(探测web服务)" {
+    $bid = $1['@'];
+    $dialog = dialog("SharpWebScan", %(iptype => "-IP",ip => beacon_info($bid,"internal"),port => "80,443,7001,8000,8001,8080,8888",bid => $bid), &SharpWebScan);
+    dialog_description($dialog, "扫描IP或C段的Web服务，获取Title，可自定义多端口扫描，返回web地址和title。项目地址：https://github.com/RcoIl/CSharp-Tools/tree/master/SharpWebScan");
+    drow_text($dialog, "ip", "ip:  ");
+    drow_text($dialog, "port", "ports:  ");
+    drow_combobox($dialog, "iptype", "-ip/-cip", @("-IP", "-CIP"));
+    dbutton_action($dialog, "运行");
+    dialog_show($dialog);
+  }
+  sub SharpWebScan {
+    $arg = join(' ', @($3['iptype'],$3['ip'],$3['port']));
+    bexecute_assembly($bid, script_resource("/scripts/Intranet scanning/SharpWebScan.exe"), $arg);
+  }
+
+
+  
+}

