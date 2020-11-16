@@ -1,3 +1,3 @@
-# Z1-AggressorScript
+# Z1-AggressorScripts
 CobaltStrike的AggressorScript
 正在完善...
