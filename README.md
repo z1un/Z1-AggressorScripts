@@ -1,6 +1,6 @@
 # Z1-AggressorScripts
 
-![](https://img.shields.io/badge/Z1-AggressorScripts-red.svg) ![](https://img.shields.io/github/languages/top/z1un/Z1-AggressorScripts.svg) ![](https://badgen.net/github/stars/z1un/Z1-AggressorScripts)
+![](https://img.shields.io/badge/Z1-AggressorScripts-red.svg)![](https://img.shields.io/github/languages/top/z1un/Z1-AggressorScripts.svg)![](https://badgen.net/github/stars/z1un/Z1-AggressorScripts)
 
 适用于Cobalt Strike的插件。
 
@@ -23,6 +23,9 @@
    - systeminfo
    - whoami /all
    - ipconfig /all
+   - 查看路由表
+   - 查看arp缓存
+   - 查看用户信息
    - 查看安装程序和版本信息
    - 查看安装的补丁
    - 查看运行的进程及路径
@@ -96,25 +99,13 @@
    - [FakeLogonScreen](https://github.com/bitsadmin/fakelogonscreen)(windows锁屏钓鱼)
    - [CredPhisher](https://github.com/matterpreter/OffensiveCSharp/tree/master/CredPhisher)(认证登录框钓鱼)
 
-## 内网扫描（未完成）
+## 内网扫描
 
-1. 探测存活网段
-
-   Writing...
-
-2. 存活端口探测
-
-   Writing...
-
-3. [SharpWebScan](https://github.com/RcoIl/CSharp-Tools/tree/master/SharpWebScan)(探测web服务)
-
-4. 服务弱口令爆破
-
-   Writing...
-
-5. 通用漏洞扫描
-
-   Writing...
+1. [SharpWebScan](https://github.com/RcoIl/CSharp-Tools/tree/master/SharpWebScan)(探测web服务)
+2. [TailorScan](https://github.com/uknowsec/TailorScan)(缝合怪内网扫描器)
+3. [fscan](https://github.com/shadow1ng/fscan)(一键大保健)
+4. [crack](https://github.com/oksbsb/crack)爆破
+5. [SharpSpray](https://github.com/jnqpblc/SharpSpray)(域内密码爆破)
 
 ## RDP相关
 
@@ -154,6 +145,22 @@ wevtutil cl application
 wevtutil cl "windows powershell"
 ```
 
+## 辅助模块
+
+1. certutil下载文件
+
+   ```bash
+   certutil.exe -urlcache -split -f $url $path
+   ```
+
+2. vbs下载文件
+
+   vbs脚本远程下载文件，命令行传参，执行完毕自动清除vbs下载脚本。
+
+3. [SharpOSS](https://github.com/uknowsec/SharpOSS)(上传文件)
+
+   通过aliyun-oss-csharp-sdk快速上传目标系统文件到阿里云OSS。
+
 ## 关于
 
 [项目地址](https://github.com/z1un/Z1-AggressorScripts)
@@ -166,6 +173,4 @@ wevtutil cl "windows powershell"
 
 该项目借鉴了大量其他该类型优秀项目，所有工具皆来自互联网，不保证其安全性。
 
-还有部分模块尚未完成，Writing...
-
-不定期更新。
+长期更新。

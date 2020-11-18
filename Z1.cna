@@ -10,6 +10,7 @@ popup beacon_bottom {
       include(script_resource("modules/Add user.cna"))
       include(script_resource("modules/Intranet agent.cna"));
       include(script_resource("modules/Clear logs.cna"));
+      include(script_resource("modules/Auxiliary.cna"));
       include(script_resource("modules/About.cna"));
     }
 }

