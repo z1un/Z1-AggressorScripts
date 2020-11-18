@@ -1,6 +1,6 @@
 # Z1-AggressorScripts
 
-![](https://img.shields.io/badge/Z1-AggressorScripts-red.svg)![](https://img.shields.io/github/languages/top/z1un/Z1-AggressorScripts.svg)![](https://badgen.net/github/stars/z1un/Z1-AggressorScripts)
+![](https://img.shields.io/badge/Z1-AggressorScripts-red.svg) ![](https://img.shields.io/github/languages/top/z1un/Z1-AggressorScripts.svg) ![](https://badgen.net/github/stars/z1un/Z1-AggressorScripts)
 
 适用于Cobalt Strike的插件。
 
