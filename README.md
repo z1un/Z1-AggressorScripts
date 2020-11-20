@@ -6,6 +6,13 @@
 
 ![image-20201119120243146](https://oss.zjun.info/zjun.info/20201119120244.png)
 
+
+2020.10.20 更新：
+- 内网穿透模块新增支持nps。
+- frp由之前的upx压缩版本换成未压缩版，upx压缩后的frp32位和nps都会在360上报毒，索性全部换成原版。但是这就项目导致体积由20几M增加到了30几M，强烈建议到[gitee](https://gitee.com/z1un/Z1-AggressorScripts)下载发行版压缩文件。
+
+  windows-npc64位通过cs上传后运行会报错，不知道是不是我个人环境问题，所以npc只上传32位，不影响使用。
+
 ## 提权
 
 1. [watson](https://github.com/rasta-mouse/Watson)获取可提取漏洞
@@ -66,8 +73,8 @@
    - 获取域信任信息
    - 获取域密码信息
    - 查看所有域成员计算机列表
-   - 查看域内所有计算机 
-   
+   - 查看域内所有计算机
+
 3. [SharpChassisType](https://github.com/RcoIl/CSharp-Tools/tree/master/SharpChassisType)判断主机类型
 
    ```
@@ -147,7 +154,7 @@
 ## 读取密码
 
 1. logonpasswords
-   
+
 2. Krbtgt hash
 
 3. 探测wifi密码
@@ -283,14 +290,21 @@
    frp指定参数版（无需frpc.ini落地）
    ```
 
-2. [NATBypass](https://github.com/cw1997/NATBypass)端口转发
+2. [nps](https://github.com/ehang-io/nps)无配置文件落地
+
+   ```
+   一款轻量级、高性能、功能强大的内网穿透代理服务器。支持tcp、udp、socks5、http等几乎所有流量转发。使用参考：https://mp.weixin.qq.com/s/zI04_kxVFWdnegctAzNmmg。
+   ```
+
+
+3. [NATBypass](https://github.com/cw1997/NATBypass)端口转发
 
    ```
    一款lcx（htran）在golang下的实现。
    通过主动连接具有公网IP的电脑打通隧道可实现内网穿透，让内网主机提供的服务能够借助外网主机来访问。软件实现的端口转发，透明代理，在主机限制入站规则但未限制出站规则的特定情况下可绕过防火墙。
    ```
 
-3. [iox](https://github.com/EddieIvan01/iox)端口转发与socks5隧道
+4. [iox](https://github.com/EddieIvan01/iox)端口转发与socks5隧道
 
    ```
    golang实现，端口转发和内网代理工具，功能类似于lcx/ew，但是比它们更好。
@@ -332,7 +346,7 @@ wevtutil cl "windows powershell"
    ```
    对目录或文件进行加密压缩，使用AES-256，使用大约100个字符的随机生成的base64密码对文件进行加密。根据提供的公共密钥对密码进行加密。压缩包提取到本地需要用EncryptedZIP解密。
    ```
-   
+
 4. [SharpOSS](https://github.com/uknowsec/SharpOSS)(上传文件)
 
    ```

