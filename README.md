@@ -7,11 +7,16 @@
 ![image-20201119120243146](https://oss.zjun.info/zjun.info/20201119120244.png)
 
 
-2020.10.20 更新：
+2020.11.21 更新：
+- 辅助模块的zip打包更换成uknow师傅的[SharpZip](https://github.com/uknowsec/SharpZip)，内存加载无需上传。
+- 权限维持模块新增创建自启动运行，包括添加注册表，添加启动文件夹，创建启动服务三种方式。
+
+2020.11.20 更新：
 - 内网穿透模块新增支持nps。
 - frp由之前的upx压缩版本换成未压缩版，upx压缩后的frp32位和nps都会在360上报毒，索性全部换成原版。但是这就项目导致体积由20几M增加到了30几M，强烈建议到[gitee](https://gitee.com/z1un/Z1-AggressorScripts)下载发行版压缩文件。
 
   windows-npc64位通过cs上传后运行会报错，不知道是不是我个人环境问题，所以npc只上传32位，不影响使用。
+
 
 ## 提权
 
@@ -315,6 +320,11 @@
 1. Skeleton Key
 2. 白银票据
 3. 黄金票据
+4. 自启动运行
+   - 创建自启动服务
+   - 启动文件夹
+   - 添加注册表实现自启动
+
 
 ## 日志清除
 
@@ -341,10 +351,10 @@ wevtutil cl "windows powershell"
    vbs脚本远程下载文件，命令行传参，执行完毕自动清除vbs下载脚本。
    ```
 
-3. [EncryptedZIP](https://github.com/mnipper/EncryptedZip)(压缩文件)
+3. [SharpZip](https://github.com/uknowsec/SharpZip)(压缩文件)
 
    ```
-   对目录或文件进行加密压缩，使用AES-256，使用大约100个字符的随机生成的base64密码对文件进行加密。根据提供的公共密钥对密码进行加密。压缩包提取到本地需要用EncryptedZIP解密。
+   对目录或文件进行压缩打包。
    ```
 
 4. [SharpOSS](https://github.com/uknowsec/SharpOSS)(上传文件)

