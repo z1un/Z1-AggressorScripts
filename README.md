@@ -5,6 +5,9 @@
 适用于Cobalt Strike 3.x & 4.x 的插件。
 
 
+2020.12.20 更新：
+
+- 更新[fscan](https://github.com/shadow1ng/fscan)工具。
 
 2020.11.21 更新：
 
