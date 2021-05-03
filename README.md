@@ -23,7 +23,7 @@
 
 - 内网穿透模块新增支持nps。
 
-- frp由之前的upx压缩版本换成未压缩版，upx压缩后的frp32位和nps都会在360上报毒，索性全部换成原版。但是这就项目导致体积由20几M增加到了30几M，强烈建议到[gitee](https://gitee.com/z1un/Z1-AggressorScripts)下载发行版压缩文件。
+- frp由之前的upx压缩版本换成未压缩版，upx压缩后的frp32位和nps都会在360上报毒，索性全部换成原版。但是这就项目导致体积由20几M增加到了30几M。
 
   windows-npc64位通过cs上传后运行会报错，不知道是不是我个人环境问题，所以npc只上传32位，不影响使用。
 
@@ -381,17 +381,9 @@ wevtutil cl "windows powershell"
 
 ## 关于
 
+[zjun](https://www.zjun.info)
+
 [项目地址](https://github.com/z1un/Z1-AggressorScripts)
-
-[zjun's blog](https://www.zjun.info)
-
----
-
-# gitee地址
-
-考虑到github在国内的git速度较慢，可到gitee进行下载。
-
-https://gitee.com/z1un/Z1-AggressorScripts
 
 # 声明
 
