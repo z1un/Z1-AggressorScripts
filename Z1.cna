@@ -5,9 +5,9 @@ popup beacon_bottom {
       include(script_resource("modules/Add user.cna"))
       include(script_resource("modules/Intranet agent.cna"));
       include(script_resource("modules/Grab password.cna"));
+      include(script_resource("modules/Intranet scanning.cna"));
       include(script_resource("modules/Locate AD.cna"));
       include(script_resource("modules/Permission retention.cna"));
-      include(script_resource("modules/Intranet scanning.cna"));
       include(script_resource("modules/Auxiliary.cna"));
       include(script_resource("modules/About.cna"));
     }
