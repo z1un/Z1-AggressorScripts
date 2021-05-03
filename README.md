@@ -4,6 +4,11 @@
 
 适用于Cobalt Strike 3.x & 4.x 的插件。
 
+2021.05.03 更新:
+
+- 去除提权和日志清理模块，这部分可以使用其他的插件或者梼杌等。
+- 默认上传目录替换为`C:\Users\Public`，相较而言它比`C:\Windows\Temp`更加简洁。
+- fscan，frp等软件更新，并新增[HackBrowserData](https://github.com/moonD4rk/HackBrowserData)工具。
 
 2020.12.20 更新：
 
