@@ -1,4 +1,4 @@
 menu "关于" {
+  item("zjun", { url_open("https://www.zjun.info"); });
   item("项目地址", { url_open("https://github.com/z1un/Z1-AggressorScripts"); });
-  item("zjun's blog", { url_open("https://www.zjun.info"); });
 }

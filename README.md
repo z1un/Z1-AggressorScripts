@@ -378,7 +378,7 @@ wevtutil cl "windows powershell"
 
 [项目地址](https://github.com/z1un/Z1-AggressorScripts)
 
-[zjun's blog](https://blog.zjun.info)
+[zjun's blog](https://www.zjun.info)
 
 ---
 

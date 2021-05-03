@@ -17,7 +17,7 @@ menu "内网扫描" {
   menu "TailorScan(缝合怪内网扫描器)" {
     item "上传TailorScan" {
       $bid = $1;
-      $dialog = dialog("上传TailorScan", %(UploadPath => "C:\\Windows\\Temp\\", bid => $bid), &TailorScan);
+      $dialog = dialog("上传TailorScan", %(UploadPath => "C:\\Users\\Public\\", bid => $bid), &TailorScan);
       dialog_description($dialog, "支持端口扫描，识别服务，获取title，扫描多网卡，ms17010扫描，icmp存活探测。项目地址：https://github.com/uknowsec/TailorScan");
       drow_text($dialog, "UploadPath",  "上传路径: ");
       dbutton_action($dialog, "上传");
@@ -79,7 +79,7 @@ menu "内网扫描" {
   menu "fscan" {
     item "上传fscan" {
       $bid = $1;
-      $dialog = dialog("上传fscan", %(UploadPath => "C:\\Windows\\Temp\\", bid => $bid), &fscan);
+      $dialog = dialog("上传fscan", %(UploadPath => "C:\\Users\\Public\\", bid => $bid), &fscan);
       dialog_description($dialog, "经测试若有360会被杀，支持主机存活探测、端口扫描、常见服务的爆破、ms17010、redis批量写私钥、计划任务反弹shell、读取win网卡信息等。项目地址：https://github.com/shadow1ng/fscan");
       drow_text($dialog, "UploadPath",  "上传路径: ");
       dbutton_action($dialog, "上传");
@@ -126,7 +126,7 @@ menu "内网扫描" {
   menu "crack爆破" {
     item "上传crack" {
       $bid = $1;
-      $dialog = dialog("上传crack", %(UploadPath => "C:\\Windows\\Temp\\", bid => $bid), &crack);
+      $dialog = dialog("上传crack", %(UploadPath => "C:\\Users\\Public\\", bid => $bid), &crack);
       dialog_description($Dialog, "支持爆破ftp，ssh，smb，mssql，mysql, postgresql,爆破完毕会在当前目录生成result.txt。fork地址：https://github.com/oksbsb/crack");
       drow_text($dialog, "UploadPath",  "上传路径: ");
       dbutton_action($dialog, "上传");

@@ -2,7 +2,7 @@ menu "定位域管" {
   menu "PsLoggedon" {
     item "上传PsLoggedon" {
       $bid = $1;
-      $dialog = dialog("上传 PsLoggedon", %(UploadPath => "C:\\Windows\\Temp\\", bid => $bid), &PsLoggedon);
+      $dialog = dialog("上传 PsLoggedon", %(UploadPath => "C:\\Users\\Public\\", bid => $bid), &PsLoggedon);
       dialog_description($dialog, "微软官方工具，该工具的某些功能需要管理员权限。项目地址：https://docs.microsoft.com/zh-cn/sysinternals/downloads/psloggedon");
       drow_text($dialog, "UploadPath",  "上传路径: ");
       dbutton_action($dialog, "上传");
@@ -35,7 +35,7 @@ menu "定位域管" {
   menu "netview" {
     item "上传netview" {
       $bid = $1;
-      $dialog = dialog("上传netview", %(UploadPath => "C:\\Windows\\Temp\\", bid => $bid), &netview);
+      $dialog = dialog("上传netview", %(UploadPath => "C:\\Users\\Public\\", bid => $bid), &netview);
       dialog_description($dialog, "绝大部分功能不需要管理员权限。项目地址：https://github.com/mubix/netview");
       drow_text($dialog, "UploadPath",  "上传路径: ");
       dbutton_action($dialog, "上传");

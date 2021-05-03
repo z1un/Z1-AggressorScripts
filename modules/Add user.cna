@@ -6,11 +6,11 @@ menu "添加用户" {
 
   item "创建管理员用户" {
     $bid = $1['@'];
-    $Dialog = dialog("添加本地管理员用户",%(username => "zjun$", passwd => "admin@123.", "groups" => "administrators", bid => $bid),&add_localuser);
+    $Dialog = dialog("添加本地管理员用户",%(username => "qax$", passwd => "Qianxin@123.", "groups" => "administrators", bid => $bid),&add_localuser);
     dialog_description($Dialog, "添加本地管理员用户，注意账户策略中的密码复杂度。");
     drow_text($Dialog, "username", "username: ");
     drow_text($Dialog, "passwd", "passwd: ");
-    drow_text($Dialog, "groups", "groups: ");
+    drow_text($Dialog, "groups", "groups(administrators): ");
     dbutton_action($Dialog, "运行");
     dialog_show($Dialog);
   }
@@ -24,7 +24,7 @@ menu "添加用户" {
 
   item "添加域管用户"{
     $bid = $1['@'];
-    $Dialog = dialog("添加域管",%(username => "zjun$",passswd => "admin@123.",bid => $bid),&add_domainuser);
+    $Dialog = dialog("添加域管",%(username => "qax$",passswd => "Qianxin@123.",bid => $bid),&add_domainuser);
     dialog_description($Dialog, "添加域管理员用户，注意账户策略中的密码复杂度。");
     drow_text($Dialog, "username", "username: ");
     drow_text($Dialog, "passswd", "passswd: ");

