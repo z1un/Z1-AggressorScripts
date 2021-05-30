@@ -302,15 +302,10 @@ menu "信息搜集" {
 			dialog_show($dialog);
 		}
 		sub evething {
-			bcd($bid, $3['UploadPath']);
-			if (-is64 $bid['id']) {
-				bupload($bid, script_resource("/scripts/Information collection/x64/Everything.exe"));
-				bupload($bid, script_resource("/scripts/Information collection/x64/Everything.ini"));
-			}else{
-				bupload($bid, script_resource("/scripts/Information collection/x86/Everything.exe"));
-				bupload($bid, script_resource("/scripts/Information collection/x86/Everything.ini"));
-			}
-		}
+            bcd($bid, $3['UploadPath']);
+            bupload($bid, script_resource("/scripts/Information collection/everything/Everything.exe"));
+            bupload($bid, script_resource("/scripts/Information collection/everything/Everything.ini"));
+        }
 
 		item "运行Everything"{
 			$bid = $1['@'];
