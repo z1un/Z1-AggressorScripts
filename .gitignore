@@ -1,0 +1,33 @@
+# for Mac OS X System Files
+.DS_Store
+Thumbs.db
+
+# for emacs
+*~
+[#]*[#]
+
+# for Eclipse
+*.project
+
+# for Logs and databases
+*.log
+
+# remove SVN
+.svn
+
+# for Xcode
+.*.swp
+.clang_complete
+*.xcodeproj/project.xcworkspace/
+*.xcodeproj/xcuserdata/
+
+# for IDEA
+*/build/*
+.idea
+.idea/*
+*.iml
+/out/*
+
+# for http
+.htaccess
+nginx.htaccess
