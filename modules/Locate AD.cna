@@ -10,12 +10,8 @@ menu "定位域管" {
     }
     sub PsLoggedon{
       bcd($bid, $3['UploadPath']);
-			if (-is64 $bid['id']) {
-				bupload($bid, script_resource("/scripts/Locate AD/x64/PsLoggedon.exe"));
-			}else{
-				bupload($bid, script_resource("/scripts/Locate AD/x86/PsLoggedon.exe"));
-			}
-    }
+	  bupload($bid, script_resource("/scripts/Locate AD/PsLoggedon.exe"));
+	}
     item "运行PsLoggedon"{
       bshell($bid, "PsLoggedon64.exe");
     }

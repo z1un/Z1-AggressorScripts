@@ -24,6 +24,21 @@ menu "RDP相关" {
     bshell($bid, "wmic RDTOGGLE WHERE ServerName='%COMPUTERNAME%' call SetAllowTSConnections 0");
   }
 
+  item "强制在线用户下线" {
+    $bid = $1['@'];
+    bshell($bid,"query user");
+    $Dialog = dialog("强制在线用户下线",%(ID => "",bid => $bid),&logoff);
+    dialog_description($Dialog, "注意控制台输出，填写ID号。");
+    drow_text($Dialog, "ID", "id: ");
+    dbutton_action($Dialog, "运行");
+    dialog_show($Dialog);
+  }
+  sub logoff{
+    local('$ID');
+    $ID = $3['id'];
+    bshell($bid, "logoff $ID");
+  }
+
   item "防火墙放行RDP规则" {
     $bid = $1['@'];
     bshell($bid, "netsh advfirewall firewall add rule name=\"Remote Desktop\" protocol=TCP dir=in localport=3389 action=allow");

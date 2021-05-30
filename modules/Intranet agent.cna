@@ -10,11 +10,7 @@ menu "内网穿透" {
 		}
 		sub frp_upload {
 			bcd($bid, $3['UploadPath']);
-			if (-is64 $bid['id']) {
-				bupload($bid, script_resource("/scripts/Intranet agent/x64/frpcx.exe"));
-			}else{
-				bupload($bid, script_resource("/scripts/Intranet agent/x86/frpcx.exe"));
-			}
+			bupload($bid, script_resource("/scripts/Intranet agent/frpcx.exe"));
 		}
 		item "运行frpc"{
 			$bid = $1['@'];
@@ -55,7 +51,6 @@ menu "内网穿透" {
 			dialog_show($dialog);
 		}
 		sub npc_upload {
-			bcd($bid, $3['UploadPath']);
 			bcd($bid, $3['UploadPath']);
 			bupload($bid, script_resource("/scripts/Intranet agent/npc.exe"));
 		}
@@ -99,11 +94,7 @@ menu "内网穿透" {
 		}
 		sub nb {
 			bcd($bid, $3['UploadPath']);
-			if (-is64 $bid['id']) {
-				bupload($bid, script_resource("/scripts/Intranet agent/x64/nb.exe"));
-			}else{
-				bupload($bid, script_resource("/scripts/Intranet agent/x86/nb.exe"));
-			}
+            bupload($bid, script_resource("/scripts/Intranet agent/nb.exe"));
 		}
 		item "运行nb"{
 			$bid = $1['@'];
@@ -144,12 +135,8 @@ menu "内网穿透" {
 			dialog_show($dialog);
 		}
 		sub iox {
-			bcd($bid, $3['UploadPath']);
-			if (-is64 $bid['id']) {
-				bupload($bid, script_resource("/scripts/Intranet agent/x64/iox.exe"));
-			}else{
-				bupload($bid, script_resource("/scripts/Intranet agent/x86/iox.exe"));
-			}
+            bcd($bid, $3['UploadPath']);
+            bupload($bid, script_resource("/scripts/Intranet agent/iox.exe"));
 		}
 		item "运行iox(fwd)"{
 			$bid = $1['@'];
